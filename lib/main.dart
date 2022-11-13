@@ -26,14 +26,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter_reactive_ble UART example'),
+      home: MyHomePage(title: 'Seek a Seeker'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -41,13 +41,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final flutterReactiveBle = FlutterReactiveBle();
   List<DiscoveredDevice> _foundBleUARTDevices = [];
-  StreamSubscription<DiscoveredDevice> _scanStream;
-  Stream<ConnectionStateUpdate> _currentConnectionStream;
-  StreamSubscription<ConnectionStateUpdate> _connection;
-  QualifiedCharacteristic _txCharacteristic;
-  QualifiedCharacteristic _rxCharacteristic;
-  Stream<List<int>> _receivedDataStream;
-  TextEditingController _dataToSendText;
+  late StreamSubscription<DiscoveredDevice> _scanStream;
+  late Stream<ConnectionStateUpdate> _currentConnectionStream;
+  late StreamSubscription<ConnectionStateUpdate> _connection;
+  late QualifiedCharacteristic _txCharacteristic;
+  late QualifiedCharacteristic _rxCharacteristic;
+  late Stream<List<int>> _receivedDataStream;
+  TextEditingController? _dataToSendText;
   bool _scanning = false;
   bool _connected = false;
   String _logTexts = "";
@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _sendData() async {
     await flutterReactiveBle.writeCharacteristicWithResponse(_rxCharacteristic,
-        value: _dataToSendText.text.codeUnits);
+        value: _dataToSendText!.text.codeUnits);
   }
 
   void onNewReceivedData(List<int> data) {
@@ -202,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(widget.title!),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -289,7 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         persistentFooterButtons: [
           Container(
-            height: 35,
+            height: 40, // James, 40?
             child: Column(
               children: [
                 if (_scanning)
@@ -311,17 +311,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           ElevatedButton(
-              onPressed: _scanning ? _stopScan : () {},
-              child: Icon(
-                Icons.stop,
-                color: _scanning ? Colors.blue : Colors.grey,
-              )),
+            onPressed: _scanning ? _stopScan : () {},
+            child: Icon(
+              Icons.stop,
+              color: _scanning ? Colors.blue : Colors.grey,
+            ),
+          ),
           ElevatedButton(
-              onPressed: _connected ? _disconnect : () {},
-              child: Icon(
-                Icons.cancel,
-                color: _connected ? Colors.blue : Colors.grey,
-              ))
+            onPressed: _connected ? _disconnect : () {},
+            child: Icon(
+              Icons.cancel,
+              color: _connected ? Colors.blue : Colors.grey,
+            ),
+          )
         ],
       );
 }
