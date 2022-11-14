@@ -4,6 +4,7 @@
 *.pbxuser
 *.perspectivev3
 **/*sync/
+**/dgph
 .sconsign.dblite
 .tags*
 **/.vagrant/
