@@ -1,4 +1,4 @@
-package nl.wolffonline.uart_ble
+package com.quadbeam.f_r_b_u_e
 
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity

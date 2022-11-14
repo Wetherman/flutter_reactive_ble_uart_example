@@ -25,7 +25,7 @@ Use the play button for scanning and the stop button for stop a running scan. Wh
 
 ## BLE undeliverable exception
 
-The BLE undeliverable exception is handled as shown in [this file.](./android/app/src/main/kotlin/nl/wolffonline/uart_ble/MainActivity.kt)
+The BLE undeliverable exception is handled as shown in [this file.](./android/app/src/main/kotlin/com/quadbeam/f_r_b_u_e/MainActivity.kt)
 
 ## Flutter BLE plugin
 
