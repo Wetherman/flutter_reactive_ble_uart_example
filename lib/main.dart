@@ -264,12 +264,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text(_receivedData.join("\n"))),
               const Text("Send message:"),
               Container(
-                  margin: const EdgeInsets.all(3.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.blue, width: 2)),
-                  child: Row(children: <Widget>[
+                margin: const EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.blue, width: 2)),
+                child: Row(
+                  children: <Widget>[
                     Expanded(
                         child: TextField(
                       enabled: _connected,
@@ -280,50 +281,60 @@ class _MyHomePageState extends State<MyHomePage> {
                     ElevatedButton(
                         child: Icon(
                           Icons.send,
-                          color: _connected ? Colors.blue : Colors.grey,
+                          color: _connected ? Colors.blue : Colors.black,
                         ),
                         onPressed: _connected ? _sendData : () {}),
-                  ]))
+                  ],
+                ),
+              ),
+              Container(
+                height: 40,
+                child: Column(
+                  children: [
+                    if (_scanning)
+                      const Text("Scanning: Scanning")
+                    else
+                      const Text("Scanning: Idle"),
+                    if (_connected)
+                      const Text("Connected")
+                    else
+                      const Text("disconnected."),
+                  ],
+                ),
+              ),
+              Container(
+                height: 40,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: !_scanning && !_connected ? _startScan : () {},
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: !_scanning && !_connected
+                            ? Colors.blue
+                            : Colors.black,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: _scanning ? _stopScan : () {},
+                      child: Icon(
+                        Icons.stop,
+                        color: _scanning ? Colors.blue : Colors.black,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: _connected ? _disconnect : () {},
+                      child: Icon(
+                        Icons.cancel,
+                        color: _connected ? Colors.blue : Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-        persistentFooterButtons: [
-          Container(
-            height: 40, // James, 40?
-            child: Column(
-              children: [
-                if (_scanning)
-                  const Text("Scanning: Scanning")
-                else
-                  const Text("Scanning: Idle"),
-                if (_connected)
-                  const Text("Connected")
-                else
-                  const Text("disconnected."),
-              ],
-            ),
-          ),
-          ElevatedButton(
-            onPressed: !_scanning && !_connected ? _startScan : () {},
-            child: Icon(
-              Icons.play_arrow,
-              color: !_scanning && !_connected ? Colors.blue : Colors.grey,
-            ),
-          ),
-          ElevatedButton(
-            onPressed: _scanning ? _stopScan : () {},
-            child: Icon(
-              Icons.stop,
-              color: _scanning ? Colors.blue : Colors.grey,
-            ),
-          ),
-          ElevatedButton(
-            onPressed: _connected ? _disconnect : () {},
-            child: Icon(
-              Icons.cancel,
-              color: _connected ? Colors.blue : Colors.grey,
-            ),
-          )
-        ],
       );
 }
