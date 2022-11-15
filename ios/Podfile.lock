@@ -1,5 +1,7 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_native_splash (0.0.1):
+    - Flutter
   - "location_permissions (3.0.0+1)":
     - Flutter
   - Protobuf (3.21.8)
@@ -11,6 +13,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - location_permissions (from `.symlinks/plugins/location_permissions/ios`)
   - reactive_ble_mobile (from `.symlinks/plugins/reactive_ble_mobile/ios`)
 
@@ -22,6 +25,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
   location_permissions:
     :path: ".symlinks/plugins/location_permissions/ios"
   reactive_ble_mobile:
@@ -29,6 +34,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   location_permissions: 7e0f9aa0f60deb8ff93ddf0e2a164c7e8197bc94
   Protobuf: 0a11f3000cd10ffa17611bf96e66a66b25c956e4
   reactive_ble_mobile: 9ce6723d37ccf701dbffd202d487f23f5de03b4c

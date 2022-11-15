@@ -4,8 +4,11 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:location_permissions/location_permissions.dart';
 import 'dart:io' show Platform;
 
-// James 20 Oct 2022 needs migrating to the new way of wrappign embedded classes
+// James 20 Oct 2022 needs migrating to the new way of wrapping embedded classes
 // https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects
+// James 15 Nov 22 done. Now looking into new splash implementation
+// Done following https://www.youtube.com/watch?v=dB0dOnc2k10
+// and thanks to  another Johannes Milke video, sort the icons and appnames
 
 // This flutter app demonstrates an usage of the flutter_reactive_ble flutter plugin
 // This app works only with BLE devices which advertise with a Nordic UART Service (NUS) UUID

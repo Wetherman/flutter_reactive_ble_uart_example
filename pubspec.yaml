@@ -1,5 +1,5 @@
-name: f_r_b_u_e
-description: flutter ble testapp
+name: phathom6
+description: flutter ble Seeker App
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -16,6 +16,22 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^2.0.1+1
+  flutter_launcher_icons: ^0.9.2
+
+# Run these commands in terminal to generate splash screen
+# 1. flutter clean
+# 2. flutter pub get
+# 3. flutter pub run flutter_native_splash:create
+flutter_native_splash:
+  color: "#355f50"  # dark olive
+  image: assets/splash_wog.png
+
+flutter_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/icon_wog.png"
 
 flutter:
   uses-material-design: true

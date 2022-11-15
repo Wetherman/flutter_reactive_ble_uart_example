@@ -1,4 +1,4 @@
-package com.quadbeam.f_r_b_u_e
+package com.quadbeam.phathom6
 
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
