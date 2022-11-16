@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:location_permissions/location_permissions.dart';
-import 'dart:io' show Platform;
+// import 'package:flutter_blue_elves/flutter_blue_elves.dart';
+import 'dart:io' show Platform, exit;
 
 // James 20 Oct 2022 needs migrating to the new way of wrapping embedded classes
 // https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects
@@ -93,6 +94,35 @@ class _MyHomePageState extends State<MyHomePage> {
     refreshScreen();
   }
 
+  Future<void> _quitWithDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Unable to proceed'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('This App requires Bluetooth.'),
+                Text('Please turn it on and try again.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Quit'),
+              onPressed: () {
+                exit(0); // Allegedly Apple mat ban your App for doing this...
+                // Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> showNoPermissionDialog() async => showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
@@ -120,15 +150,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _startScan() async {
     bool goForIt = false;
+    // BleStatus can be unknown, unsupported, unauthorised, poweredOff, locationServicesDisabled or ready
+    if (flutterReactiveBle.status == BleStatus.poweredOff) {
+      _quitWithDialog();
+    }
     PermissionStatus permission;
     if (Platform.isAndroid) {
       permission = await LocationPermissions().requestPermissions();
       if (permission == PermissionStatus.granted) goForIt = true;
     } else if (Platform.isIOS) {
-      goForIt = true;
+      // goForIt = true;
+      permission = await LocationPermissions().requestPermissions();
+      if (permission == PermissionStatus.granted) goForIt = true;
     }
     if (goForIt) {
-      //TODO replace True with permission == PermissionStatus.granted is for IOS test
       _foundBleUARTDevices = [];
       _scanning = true;
       refreshScreen();
@@ -258,13 +293,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: SingleChildScrollView(child: Text(_logTexts)))),
               const Text("Received data:"),
               Container(
-                  margin: const EdgeInsets.all(3.0),
-                  width: 1400,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.blue, width: 2)),
-                  height: 90,
-                  child: Text(_receivedData.join("\n"))),
+                margin: const EdgeInsets.all(3.0),
+                width: 1400,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.blue, width: 2)),
+                height: 90,
+                child: Text(
+                  _receivedData.join("\n"),
+                ),
+              ),
               const Text("Send message:"),
               Container(
                 margin: const EdgeInsets.all(3.0),
